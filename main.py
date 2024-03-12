@@ -1,4 +1,6 @@
 from dog import Dog
 
-dog = Dog()
-dog.move()
+dog = Dog("Бобік", 10, "Лабрадор")
+
+
+print(dog.name)
