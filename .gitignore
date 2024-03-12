@@ -4,3 +4,5 @@
 /.idea/inspectionProfiles/profiles_settings.xml
 /.idea/vcs.xml
 /.idea/workspace.xml
+__pycache__/animal.cpython-310.pyc
+__pycache__/dog.cpython-310.pyc
