@@ -1,5 +1,4 @@
-from dog import Dog
+from lab_25_task_1.student import Student
 
-dog = Dog("Бобік", 10, "Лабрадор")
-
-print(dog.name)
+student = Student("Іван", 20)
+student.print_info()
