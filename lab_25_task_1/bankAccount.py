@@ -13,8 +13,8 @@ class BankAccount:
     def withdraw(self, amount):
         if 0 < amount <= self.balance:
             self.balance -= amount
-            print(f"{amount} успішно знято з вашого рахунку.")
+            print(f"{amount} успішно знято з вашого рахунку.\n")
         else:
-            print("Недостатньо коштів на рахунку або сума зняття некоректна.")
+            print("Недостатньо коштів на рахунку або сума зняття некоректна.\n")
 
 
