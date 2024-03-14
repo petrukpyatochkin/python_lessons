@@ -1,0 +1,205 @@
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from lab_25_task_1.bankAccount import BankAccount\r\nfrom lab_25_task_1.book import Book\r\nfrom lab_25_task_1.car import Car\r\nfrom lab_25_task_1.circle import Circle\r\nfrom lab_25_task_1.person import Person\r\nfrom lab_25_task_1.student import Student\r\n\r\nstudent = Student(\"Іван\", 20)\r\nstudent.print_info()\r\n\r\ncircle = Circle(10)\r\nprint(f\"Радіус {circle.area()}\\n\")\r\n\r\nbook = Book(\"2010\", \"Hello World\", \"test\")\r\nbook.display_info()\r\n\r\ncar = Car(\"Toyota\", \"Camry\", 2020)\r\ncar.start_engine()\r\n\r\naccount = BankAccount(\"Василь Петрович\", 1000)\r\naccount.deposit(500)\r\naccount.withdraw(200)\r\naccount.withdraw(1500)\r\n\r\n\r\nperson1 = Person(\"Олександр\", 25)\r\nperson2 = Person(\"Марія\", 17)\r\nprint(f\"{person1.name} є дорослим? {person1.is_adult()}\")\r\nprint(f\"{person2.name} є дорослим? {person2.is_adult()}\")
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	(revision fc9cca8050b483485ed47c3d88be179ab5ca3a83)
++++ b/main.py	(date 1710403886949)
+@@ -1,29 +1,81 @@
+-from lab_25_task_1.bankAccount import BankAccount
+-from lab_25_task_1.book import Book
+-from lab_25_task_1.car import Car
+-from lab_25_task_1.circle import Circle
+-from lab_25_task_1.person import Person
+-from lab_25_task_1.student import Student
++from lab_25_hw.address import Address
++from lab_25_hw.human import Human
++
++while True:
++    try:
++
++        full_name = input("Введіть ПІБ: ") or 'Іваненко Іван Іванович'
++
++        birth_date = input("Введіть дату народження (DD.MM.YYYY): ") or '01.01.1980'
++
++        phone_input = input("Введіть номери телефону (можна ввести декілька номерів, розділивши їх комою): ")
++        if not phone_input.strip():
++            phone_numbers = ['+380501234567', '+380951234567']
++        else:
++            phone_numbers = [number.strip() for number in phone_input.split(',')]
+ 
+-student = Student("Іван", 20)
+-student.print_info()
++        city = input("Введіть місто: ") or 'Київ'
++        country = input("Введіть країну: ") or 'Україна'
++        address_line = input("Введіть адресу: ") or 'Вулиця Либідська, 12'
++        print("\n")
+ 
+-circle = Circle(10)
+-print(f"Радіус {circle.area()}\n")
++        address_obj = Address(
++            city=city,
++            country=country,
++            address=address_line)
+ 
+-book = Book("2010", "Hello World", "test")
+-book.display_info()
++        human = Human(
++            full_name=full_name,
++            birth_date=birth_date,
++            phone_numbers=phone_numbers,
++            address=address_obj)
+ 
+-car = Car("Toyota", "Camry", 2020)
+-car.start_engine()
++        human.display_info()
+ 
+-account = BankAccount("Василь Петрович", 1000)
+-account.deposit(500)
+-account.withdraw(200)
+-account.withdraw(1500)
++        while True:
++            print("\nМеню:")
++            print("1. Додати номер телефону")
++            print("2. Видалити номер телефону")
++            print("3. Оновити персональні дані")
++            print("4. Оновити адресу")
++            print("5. Показати повну інформацію")
++            print("6. Вийти")
+ 
++            choice = input("Оберіть дію: ")
+ 
+-person1 = Person("Олександр", 25)
+-person2 = Person("Марія", 17)
+-print(f"{person1.name} є дорослим? {person1.is_adult()}")
+-print(f"{person2.name} є дорослим? {person2.is_adult()}")
+\ No newline at end of file
++            if choice == '1':
++                new_phone = input("Введіть новий номер телефону: ")
++                human.add_phone_number(new_phone)
++            elif choice == '2':
++                phone_to_remove = input("Введіть номер телефону для видалення: ")
++                human.remove_phone_number(phone_to_remove)
++            elif choice == '3':
++                new_full_name = input("Введіть нове ПІБ: ")
++                new_birth_date = input("Введіть нову дату народження (DD.MM.YYYY): ")
++
++                human.update_human(
++                    full_name=new_full_name,
++                    birth_date=new_birth_date)
++            elif choice == '4':
++                new_city = input("Введіть нове місто: ")
++                new_country = input("Введіть нову країну: ")
++                new_address = input("Введіть нову адресу: ")
++                human.update_address_info(
++                    city=new_city,
++                    country=new_country,
++                    address=new_address)
++            elif choice == '5':
++                human.display_info()
++            elif choice == '6':
++                print("Ви вийшли з програми.")
++                break
++            else:
++                print("Невідома опція, спробуйте ще раз.")
++    except Exception as e:
++        print(f"Сталася помилка: {e}")
++        continue
++
++    user_choice = input(
++        "\nНатисніть Enter, щоб повернутися до головного меню, або будь-яку іншу клавішу, щоб вийти: ")
++    if user_choice:
++        break
+\ No newline at end of file
+Index: lab_25_hw/address.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lab_25_hw/address.py b/lab_25_hw/address.py
+new file mode 100644
+--- /dev/null	(date 1710400873706)
++++ b/lab_25_hw/address.py	(date 1710400873706)
+@@ -0,0 +1,17 @@
++class Address:
++    def __init__(self, city, country, address):
++        self.city = city
++        self.country = country
++        self.address = address
++
++    def update_address(self, **kwargs):
++        for key, value in kwargs.items():
++            if hasattr(self, key):
++                setattr(self, key, value)
++            else:
++                print(f"Поле '{key}' не існує в класі Address.")
++
++    def display_address(self):
++        for key, value in self.__dict__.items():
++            if value is not None:
++                print(f"{key.replace('_', ' ').capitalize()}: {value}")
+\ No newline at end of file
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/.idea/Lesson25.iml\r\n/.idea/misc.xml\r\n/.idea/modules.xml\r\n/.idea/inspectionProfiles/profiles_settings.xml\r\n/.idea/vcs.xml\r\n/.idea/workspace.xml\r\n__pycache__/animal.cpython-310.pyc\r\n__pycache__/dog.cpython-310.pyc\r\n/Python_ПЗ_Модуль_11_ООП_ч_1.1.pdf\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore	(revision fc9cca8050b483485ed47c3d88be179ab5ca3a83)
++++ b/.gitignore	(date 1710399492165)
+@@ -7,3 +7,4 @@
+ __pycache__/animal.cpython-310.pyc
+ __pycache__/dog.cpython-310.pyc
+ /Python_ПЗ_Модуль_11_ООП_ч_1.1.pdf
++/Python_ДЗ_Модуль_11_ООП_ч_1.pdf
+Index: lab_25_hw/human.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lab_25_hw/human.py b/lab_25_hw/human.py
+new file mode 100644
+--- /dev/null	(date 1710403886945)
++++ b/lab_25_hw/human.py	(date 1710403886945)
+@@ -0,0 +1,36 @@
++class Human:
++    def __init__(self, full_name, birth_date, phone_numbers, address):
++        self.full_name = full_name
++        self.birth_date = birth_date
++        self.phone_numbers = phone_numbers
++        self.address = address
++
++    def update_human(self, **kwargs):
++        for key, value in kwargs.items():
++            if hasattr(self, key):
++                setattr(self, key, value)
++            else:
++                print(f"Поле '{key}' не існує в класі Human.")
++
++    def add_phone_number(self, phone_number):
++        self.phone_numbers.append(phone_number)
++
++    def remove_phone_number(self, phone_number):
++        if phone_number in self.phone_numbers:
++            self.phone_numbers.remove(phone_number)
++        else:
++            print("Номер не знайдено.")
++
++    def update_address_info(self, **kwargs):
++        self.address.update_address(**kwargs)
++
++    def display_info(self):
++        for key, value in self.__dict__.items():
++            if value is not None:
++                if key == 'address':
++                    value.display_address()
++                elif key == 'phone_numbers':
++                    print(f"{key.replace('_', ' ').capitalize()}: {', '.join(value)}")
++                else:
++                    print(f"{key.replace('_', ' ').capitalize()}: {value}")
++

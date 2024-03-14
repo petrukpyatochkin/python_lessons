@@ -1,66 +1,52 @@
-from lab_25_hw.address import Address
-from lab_25_hw.human import Human
+from lab_25_hw.city import City
 
 while True:
     try:
-        full_name = input("Введіть ПІБ: ") or 'Іваненко Іван Іванович'
-        birth_date = input("Введіть дату народження (DD.MM.YYYY): ") or '01.01.1980'
+        name = input("Введіть назву міста: ") or 'Невідоме місто'
+        region = input("Введіть назву регіону: ") or 'Невідомий регіон'
+        country = input("Введіть назву країни: ") or 'Невідома країна'
+        population_input = input("Введіть кількість жителів у місті: ")
+        postal_code = input("Введіть поштовий індекс міста: ") or '00000'
+        phone_code = input("Введіть телефонний код міста: ") or '+0000'
 
-        phone_input = input("Введіть номери телефону (можна ввести декілька номерів, розділивши їх комою): ")
-        if not phone_input.strip():
-            phone_numbers = ['+380501234567', '+380951234567']
-        else:
-            phone_numbers = [number.strip() for number in phone_input.split(',')]
+        try:
+            population = int(population_input) if population_input else 0
+        except ValueError:
+            print("Кількість жителів має бути числом. Спробуйте ще раз.")
+            continue
 
-        city = input("Введіть місто: ") or 'Київ'
-        country = input("Введіть країну: ") or 'Україна'
-        address_line = input("Введіть адресу: ") or 'Вул. Хрещатик, 1'
+        city = City(name, region, country, population, postal_code, phone_code)
 
-        address_obj = Address(
-            city=city,
-            country=country,
-            address=address_line)
-
-        person = Human(
-            full_name=full_name,
-            birth_date=birth_date,
-            phone_numbers=phone_numbers,
-            address=address_obj)
-
-        person.display_info()
+        city.display_info()
 
         while True:
             print("\nМеню:")
-            print("1. Додати номер телефону")
-            print("2. Видалити номер телефону")
-            print("3. Оновити персональні дані")
-            print("4. Оновити адресу")
-            print("5. Показати повну інформацію")
-            print("6. Вийти")
-
-            choice = input("Оберіть дію: ")
+            print("1. Оновити інформацію про місто")
+            print("2. Вийти з програми")
+            choice = input("Оберіть опцію: ")
 
             if choice == '1':
-                new_phone = input("Введіть новий номер телефону: ")
-                person.add_phone_number(new_phone)
+                new_name = input("Введіть нову назву міста або залиште пустим: ")
+                new_region = input("Введіть нову назву регіону або залиште пустим: ")
+                new_country = input("Введіть нову назву країни або залиште пустим: ")
+                new_population_input = input("Введіть нову кількість жителів у місті або залиште пустим: ")
+                new_postal_code = input("Введіть новий поштовий індекс міста або залиште пустим: ")
+                new_phone_code = input("Введіть новий телефонний код міста або залиште пустим: ")
+
+                new_population = int(new_population_input) if new_population_input else city.population
+
+                city.update_info(
+                    name=new_name or city.name,
+                    region=new_region or city.region,
+                    country=new_country or city.country,
+                    population=new_population,
+                    postal_code=new_postal_code or city.postal_code,
+                    phone_code=new_phone_code or city.phone_code
+                )
+                city.display_info()
+
             elif choice == '2':
-                phone_to_remove = input("Введіть номер телефону для видалення: ")
-                person.remove_phone_number(phone_to_remove)
-            elif choice == '3':
-                new_full_name = input("Введіть ПІБ: ")
-                new_birth_date = input("Введіть нову дату народження (DD.MM.YYYY): ")
-                person.update_human(
-                    full_name=new_full_name,
-                    birth_date=new_birth_date)
-            elif choice == '4':
-                new_city = input("Введіть нове місто: ")
-                new_country = input("Введіть нову країну: ")
-                new_address = input("Введіть нову адресу: ")
-                person.update_address_info(city=new_city, country=new_country, address=new_address)
-            elif choice == '5':
-                person.display_info()
-            elif choice == '6':
-                print("Ви вийшли з програми.")
+                print("Вихід з програми.")
                 break
             else:
                 print("Невідома опція, спробуйте ще раз.")
